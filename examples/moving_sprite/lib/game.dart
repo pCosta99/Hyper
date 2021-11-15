@@ -3,6 +3,7 @@ import 'package:flame/sprite.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 
 import 'sprite.dart';
+import 'boundaries.dart';
 
 class MyGame extends Forge2DGame with MultiTouchDragDetector {
   late Avatar avatar;
@@ -17,6 +18,7 @@ class MyGame extends Forge2DGame with MultiTouchDragDetector {
     final _sprite = sheet.getSprite(0, 1);
     avatar = Avatar(Vector2(100, -25), Vector2(0, 0), _sprite);
     add(avatar);
+    addAll(createBoundaries(this));
   }
 
   @override
