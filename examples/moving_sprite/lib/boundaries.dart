@@ -8,8 +8,7 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/body_component.dart';
 
 List<Wall> createBoundaries(Forge2DGame game) {
-  /*final Vector2 topLeft = Vector2.zero();*/
-  final Vector2 topLeft = Vector2(0,0);
+  final Vector2 topLeft = Vector2.zero();
   final Vector2 bottomRight = Vector2(200,-100);
   final Vector2 topRight = Vector2(bottomRight.x, topLeft.y);
   final Vector2 bottomLeft = Vector2(topLeft.x, bottomRight.y);
