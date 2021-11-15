@@ -8,6 +8,9 @@ import 'boundaries.dart';
 class MyGame extends Forge2DGame with MultiTouchDragDetector {
   late Avatar avatar;
 
+  // No gravity
+  MyGame() : super(gravity: Vector2(0, 0));
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
