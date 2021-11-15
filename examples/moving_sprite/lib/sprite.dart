@@ -43,4 +43,10 @@ class Avatar extends SpriteBodyComponent {
     body.applyLinearImpulse(worldDelta * 1000);
     print('Velocity: ${body.linearVelocity}');
   }
+
+  void invertDirection() {
+    print('At the start of invert: ${body.linearVelocity}');
+    body.linearVelocity = body.linearVelocity.gr;
+    print('At the end of invert: ${body.linearVelocity}');
+  }
 }
