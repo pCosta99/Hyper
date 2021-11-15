@@ -16,10 +16,14 @@ class Avatar extends SpriteBodyComponent {
   Body createBody() {
     final PolygonShape shape = PolygonShape();
 
+    print('Size of dude is $size');
+
+    // TODO: Make a better fit with the body but it's alright for now
     final vertices = [
-      Vector2(-size.x / 2, -size.y / 2),
-      Vector2(size.x / 2, -size.y / 2),
-      Vector2(0, size.y / 2),
+      Vector2(-size.x / 8, -size.y / 2), //bottom left
+      Vector2(size.x / 8, -size.y / 2), //bottom right
+      Vector2(size.x / 8, size.y / 8), //upper left
+      Vector2(-size.x / 8, size.y / 8), //upper right
     ];
     shape.set(vertices);
 

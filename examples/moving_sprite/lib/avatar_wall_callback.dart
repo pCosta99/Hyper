@@ -9,10 +9,10 @@ class AvatarWallCallback extends ContactCallback<Avatar, Wall> {
 
   @override
   void begin(Avatar a, Wall b, Contact contact){
+    a.invertDirection();
   }
 
   @override
   void end(Avatar a, Wall b, Contact contact){
-    a.invertDirection();
   }
 }

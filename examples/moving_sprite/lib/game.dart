@@ -1,3 +1,7 @@
+import 'package:flame/components.dart';
+import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
+import 'dart:ui' hide TextStyle;
 import 'package:flame/input.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
@@ -6,8 +10,24 @@ import 'sprite.dart';
 import 'boundaries.dart';
 import 'avatar_wall_callback.dart';
 
-class MyGame extends Forge2DGame with MultiTouchDragDetector {
+class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
+
+  static final fpsTextPaint = TextPaint(
+    config: const TextPaintConfig(color: Color(0xFFFFFFFF)),
+  );
+
+  /*@override*/
+  /*bool debugMode = true;*/
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+
+    if (debugMode) {
+      fpsTextPaint.render(canvas, fps(120).toString(), Vector2(0, 50));
+    }
+  }
 
   // No gravity
   MyGame() : super(gravity: Vector2(0, 0));

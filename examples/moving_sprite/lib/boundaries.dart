@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:forge2d/forge2d.dart';
@@ -13,7 +11,7 @@ List<Wall> createBoundaries(Forge2DGame game) {
   final Vector2 topRight = Vector2(bottomRight.x, topLeft.y);
   final Vector2 bottomLeft = Vector2(topLeft.x, bottomRight.y);
 
-  print('bottomRight: ${bottomRight}');
+  print('bottomRight: $bottomRight');
 
   return [
     Wall(topLeft, topRight),
