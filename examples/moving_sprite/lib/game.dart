@@ -10,6 +10,12 @@ import 'sprite.dart';
 import 'boundaries.dart';
 import 'avatar_wall_callback.dart';
 
+Vector2 getCenter(size) {
+  var center = size;
+  center.multiply(Vector2(0.5, -0.5));
+  return center;
+}
+
 class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
 
@@ -40,7 +46,7 @@ class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
         image: await images.load('avatar.png'), srcSize: Vector2(224, 112));
 
     final _sprite = sheet.getSprite(0, 1);
-    avatar = Avatar(Vector2(0, 0), Vector2(0, 0), _sprite);
+    avatar = Avatar(getCenter(size), Vector2(0, 0), _sprite);
 
     addAll(createBoundaries(this));
     add(avatar);
