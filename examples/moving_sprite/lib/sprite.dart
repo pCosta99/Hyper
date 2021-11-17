@@ -8,9 +8,10 @@ import 'package:flame_forge2d/position_body_component.dart';
 class Avatar extends PositionBodyComponent {
   final Vector2 _position;
   final Vector2 _angle;
+  final SpriteAnimation _running;
+  final SpriteAnimationComponent _comp;
 
-  Avatar(this._position, this._angle, _size, SpriteAnimation animation)
-  : super(SpriteAnimationComponent(size: _size, position: _position, animation: animation), _size);
+  Avatar(this._position, this._angle, _size, this._comp, this._running) : super(_comp, _size);
 
   @override
   Body createBody() {
@@ -43,6 +44,7 @@ class Avatar extends PositionBodyComponent {
   void push(Vector2 game) {
     final worldDelta = Vector2(1, -1)..multiply(game);
     body.applyLinearImpulse(worldDelta * 1000);
+    _comp.animation = _running;
     print('Velocity: ${body.linearVelocity}');
   }
 
