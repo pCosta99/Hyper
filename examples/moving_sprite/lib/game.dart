@@ -56,9 +56,11 @@ class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
     final sheet = SpriteSheet(
         image: await images.load('avatar.png'), srcSize: Vector2(224, 112));
 
-    final _sprite = sheet.getSprite(0, 1);
+    final spriteRunning = sheet.createAnimation(row: 1, stepTime: 0.15, to: 7);
 
-    avatar = Avatar(getCenter(worldSize), Vector2(0, 0), _sprite);
+    /*final _sprite = sheet.getSprite(0, 1);*/
+
+    avatar = Avatar(getCenter(worldSize), Vector2(0, 0), Vector2(66, 33), spriteRunning);
 
     addAll(createBoundaries(this));
     add(avatar);

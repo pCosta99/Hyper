@@ -2,21 +2,19 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/input.dart';
 import 'package:flame/game.dart';
-import 'package:flame_forge2d/sprite_body_component.dart';
 import 'package:forge2d/forge2d.dart';
+import 'package:flame_forge2d/position_body_component.dart';
 
-class Avatar extends SpriteBodyComponent {
+class Avatar extends PositionBodyComponent {
   final Vector2 _position;
   final Vector2 _angle;
 
-  Avatar(this._position, this._angle, Sprite sprite)
-      : super(sprite, Vector2(66, 33));
+  Avatar(this._position, this._angle, _size, SpriteAnimation animation)
+  : super(SpriteAnimationComponent(size: _size, position: _position, animation: animation), _size);
 
   @override
   Body createBody() {
     final PolygonShape shape = PolygonShape();
-
-    print('Size of dude is $size');
 
     // TODO: Make a better fit with the body but it's alright for now
     final vertices = [
