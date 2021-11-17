@@ -10,14 +10,23 @@ import 'sprite.dart';
 import 'boundaries.dart';
 import 'avatar_wall_callback.dart';
 
-Vector2 getCenter(size) {
-  var center = size;
+Vector2 getCenter(Vector2 size) {
+  var center = size.clone();
   center.multiply(Vector2(0.5, -0.5));
   return center;
 }
 
+Rect cameraMaxRect(worldSize) {
+  // Very very odd, but works, the width/height can't exactly match the world size
+  final rect = Rect.fromLTWH(0, 0, worldSize.x + 0.1, worldSize.y + 0.1);
+
+  return rect;
+}
+
 class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
+
+  static const worldMultiplier = 5.0;
 
   static final fpsTextPaint = TextPaint(
     config: const TextPaintConfig(color: Color(0xFFFFFFFF)),
@@ -36,27 +45,33 @@ class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   }
 
   // No gravity
-  MyGame() : super(gravity: Vector2(0, 0));
+  MyGame() : super(gravity: Vector2(0, 0), zoom: worldMultiplier);
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
+    final worldSize = size * worldMultiplier;
+
     final sheet = SpriteSheet(
         image: await images.load('avatar.png'), srcSize: Vector2(224, 112));
 
     final _sprite = sheet.getSprite(0, 1);
-    avatar = Avatar(getCenter(size), Vector2(0, 0), _sprite);
+
+    avatar = Avatar(getCenter(worldSize), Vector2(0, 0), _sprite);
 
     addAll(createBoundaries(this));
     add(avatar);
     addContactCallback(AvatarWallCallback());
+
+    camera.followComponent(avatar.positionComponent,
+        worldBounds: cameraMaxRect(worldSize));
   }
 
   @override
   bool onDragUpdate(int pointerId, DragUpdateInfo info) {
     print('Update ${info.delta.game}');
-    avatar.move(info.delta.game);
+    avatar.push(info.delta.game);
     return true;
   }
 

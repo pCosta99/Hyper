@@ -8,7 +8,7 @@ import 'package:flame_forge2d/body_component.dart';
 List<Wall> createBoundaries(Forge2DGame game) {
   final Vector2 topLeft = Vector2.zero();
   final Vector2 bottomRight = game.size;
-  bottomRight.multiply(Vector2(1,-1)); // This is needed because for some reason I need to use y negative in here (no clue?)
+  bottomRight.multiply(Vector2(5,-5)); // This is needed because for some reason I need to use y negative in here (no clue?)
   final Vector2 topRight = Vector2(bottomRight.x, topLeft.y);
   final Vector2 bottomLeft = Vector2(topLeft.x, bottomRight.y);
 

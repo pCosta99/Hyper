@@ -42,7 +42,7 @@ class Avatar extends SpriteBodyComponent {
   }
 
   // Based on https://github.com/flame-engine/flame_forge2d/blob/main/example/lib/draggable_sample.dart#L37
-  void move(Vector2 game) {
+  void push(Vector2 game) {
     final worldDelta = Vector2(1, -1)..multiply(game);
     body.applyLinearImpulse(worldDelta * 1000);
     print('Velocity: ${body.linearVelocity}');
