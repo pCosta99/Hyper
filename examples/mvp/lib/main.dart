@@ -14,7 +14,7 @@ void main() {
 
 class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
-  static const worldMultiplier = 5.0;
+  static const worldMultiplier = 1.0;
 
   // No gravity
   MVP() : super(gravity: Vector2.zero(), zoom: worldMultiplier);
@@ -41,6 +41,7 @@ class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
         spriteRunning);
 
     add(avatar);
+    addAll(createBoundaries(this));
 
     camera.followComponent(avatar.positionComponent,
         worldBounds: cameraMaxRect(worldSize));
