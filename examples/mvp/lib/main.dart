@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 
 import 'avatar.dart';
+import 'utils.dart';
 
 void main() {
   runApp(GameWidget (game: MVP()));
@@ -33,12 +34,15 @@ class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
 
     final comp = SpriteAnimationComponent(
         size: Vector2(66, 33),
-        position: Vector2.zero(),
+        position: getCenter(worldSize),
         animation: spriteIdle);
 
     avatar = Avatar(Vector2(0, 0), Vector2(66, 33), comp,
         spriteRunning);
 
     add(avatar);
+
+    camera.followComponent(avatar.positionComponent,
+        worldBounds: cameraMaxRect(worldSize));
   }
 }
