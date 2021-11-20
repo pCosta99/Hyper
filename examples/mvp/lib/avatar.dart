@@ -10,8 +10,7 @@ class Avatar extends PositionBodyComponent {
   final SpriteAnimation _running;
   final SpriteAnimationComponent _comp;
 
-  Avatar(this._angle, _size, this._comp, this._running)
-      : super(_comp, _size);
+  Avatar(this._angle, _size, this._comp, this._running) : super(_comp, _size);
 
   @override
   Body createBody() {

@@ -13,12 +13,13 @@ import 'callbacks.dart';
 import 'area.dart';
 
 void main() {
-  runApp(GameWidget (game: MVP()));
+  runApp(GameWidget(game: MVP()));
 }
 
 class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
-  static const worldMultiplier = 5.0;
+  static const worldMultiplier = 1.0;
+  static const ballMax = 5;
   var listOfAreas = [];
 
   // No gravity
@@ -28,11 +29,12 @@ class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   void update(double dt) {
     super.update(dt);
     final worldSize = size * worldMultiplier;
-    if (listOfAreas.length < 20) {
-      double x = Random().nextInt(500).toDouble();
-      double y = Random().nextInt(500).toDouble();
+    if (listOfAreas.length < ballMax) {
+      double x = Random().nextInt(worldSize.x.round()).toDouble();
+      // Negative y again, this really doesn't help with not having stupid bugs
+      double y = -1 * Random().nextInt(worldSize.y.round()).toDouble();
 
-      final area = Area(getCenter(worldSize) + Vector2(x, y));
+      final area = Area(Vector2(x, y));
       listOfAreas.add(area);
       add(area);
     }
@@ -49,19 +51,18 @@ class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
 
     final spriteRunning = sheet.createAnimation(row: 1, stepTime: 0.15, to: 7);
 
-    final spriteIdle = sheet.createAnimation(row: 0, stepTime: 2.15, to: 7);
+    final spriteIdle = sheet.createAnimation(row: 0, stepTime: 0.15, to: 7);
 
     final comp = SpriteAnimationComponent(
         size: Vector2(66, 33),
         position: getCenter(worldSize),
         animation: spriteIdle);
 
-    avatar = Avatar(Vector2(0, 0), Vector2(66, 33), comp,
-        spriteRunning);
+    avatar = Avatar(Vector2(0, 0), Vector2(66, 33), comp, spriteRunning);
 
     add(avatar);
-    addAll(createBoundaries(this));
-    addContactCallback(Callback());
+    addAll(createBoundaries(this, worldMultiplier));
+    addContactCallback(AvatarAreaCallback(listOfAreas));
 
     camera.followComponent(avatar.positionComponent,
         worldBounds: cameraMaxRect(worldSize));

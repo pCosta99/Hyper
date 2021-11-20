@@ -18,10 +18,11 @@ Rect cameraMaxRect(worldSize) {
   return rect;
 }
 
-List<Wall> createBoundaries(Forge2DGame game) {
+List<Wall> createBoundaries(Forge2DGame game, double worldMultiplier) {
   final Vector2 topLeft = Vector2.zero();
   final Vector2 bottomRight = game.size;
-  bottomRight.multiply(Vector2(1,-1)); // This is needed because for some reason I need to use y negative in here (no clue?)
+  bottomRight.multiply(Vector2(1, -1) *
+      worldMultiplier); // This is needed because for some reason I need to use y negative in here (no clue?)
   final Vector2 topRight = Vector2(bottomRight.x, topLeft.y);
   final Vector2 bottomLeft = Vector2(topLeft.x, bottomRight.y);
 

@@ -15,16 +15,6 @@ class Area extends BodyComponent {
   }
 
   @override
-  void update(double dt) {
-    super.update(dt);
-    /*print('For destruction: $forDestruction');*/
-    if (forDestruction) {
-      world.destroyBody(body);
-      print('Destroyed');
-    }
-  }
-
-  @override
   Body createBody() {
     final shape = CircleShape();
     shape.radius = radius;
@@ -46,10 +36,5 @@ class Area extends BodyComponent {
 
   Vector2 position() {
     return _position;
-  }
-
-  void destroy() {
-    forDestruction = true;
-    print('Destroyed');
   }
 }
