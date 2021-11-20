@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -8,6 +10,7 @@ import 'package:flame_forge2d/forge2d_game.dart';
 import 'avatar.dart';
 import 'utils.dart';
 import 'callbacks.dart';
+import 'area.dart';
 
 void main() {
   runApp(GameWidget (game: MVP()));
@@ -15,10 +18,25 @@ void main() {
 
 class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
-  static const worldMultiplier = 1.0;
+  static const worldMultiplier = 5.0;
+  var listOfAreas = [];
 
   // No gravity
   MVP() : super(gravity: Vector2.zero(), zoom: worldMultiplier);
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    final worldSize = size * worldMultiplier;
+    if (listOfAreas.length < 20) {
+      double x = Random().nextInt(500).toDouble();
+      double y = Random().nextInt(500).toDouble();
+
+      final area = Area(getCenter(worldSize) + Vector2(x, y));
+      listOfAreas.add(area);
+      add(area);
+    }
+  }
 
   @override
   Future<void> onLoad() async {
