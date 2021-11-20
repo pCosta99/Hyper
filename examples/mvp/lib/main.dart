@@ -45,4 +45,10 @@ class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
     camera.followComponent(avatar.positionComponent,
         worldBounds: cameraMaxRect(worldSize));
   }
+
+  @override
+  bool onDragUpdate(int pointerId, DragUpdateInfo info) {
+    avatar.push(info.delta.game);
+    return true;
+  }
 }
