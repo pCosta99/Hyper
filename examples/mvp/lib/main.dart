@@ -7,6 +7,7 @@ import 'package:flame_forge2d/forge2d_game.dart';
 
 import 'avatar.dart';
 import 'utils.dart';
+import 'callbacks.dart';
 
 void main() {
   runApp(GameWidget (game: MVP()));
@@ -42,6 +43,7 @@ class MVP extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
 
     add(avatar);
     addAll(createBoundaries(this));
+    addContactCallback(Callback());
 
     camera.followComponent(avatar.positionComponent,
         worldBounds: cameraMaxRect(worldSize));

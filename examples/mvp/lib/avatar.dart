@@ -33,6 +33,7 @@ class Avatar extends PositionBodyComponent {
       ..friction = 0.2;
 
     final bodyDef = BodyDef()
+      ..userData = this
       ..position = _comp.position
       ..angle = (_angle.x + _angle.y) / 2 * 3.14
       ..type = BodyType.dynamic;
