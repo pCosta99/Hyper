@@ -1,13 +1,16 @@
+import 'dart:ui' hide TextStyle;
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui' hide TextStyle;
 import 'package:flame/input.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 
 import 'sprite.dart';
 import 'boundaries.dart';
+import 'area.dart';
 import 'avatar_wall_callback.dart';
 
 Vector2 getCenter(Vector2 size) {
@@ -25,6 +28,7 @@ Rect cameraMaxRect(worldSize) {
 
 class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   late Avatar avatar;
+  var listOfAreas = [];
 
   static const worldMultiplier = 5.0;
 
@@ -48,6 +52,20 @@ class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
   MyGame() : super(gravity: Vector2(0, 0), zoom: worldMultiplier);
 
   @override
+  void update(double dt) {
+    super.update(dt);
+    final worldSize = size * worldMultiplier;
+    if (listOfAreas.length < 20) {
+      double x = Random().nextInt(1000).toDouble();
+      double y = Random().nextInt(1000).toDouble();
+
+      final area = Area(getCenter(worldSize) + Vector2(x, y));
+      listOfAreas.add(area);
+      add(area);
+    }
+  }
+
+  @override
   Future<void> onLoad() async {
     await super.onLoad();
 
@@ -60,12 +78,16 @@ class MyGame extends Forge2DGame with MultiTouchDragDetector, FPSCounter {
 
     final spriteIdle = sheet.createAnimation(row: 0, stepTime: 2.15, to: 7);
 
-    final comp = SpriteAnimationComponent(size: Vector2(66,33), position: getCenter(worldSize), animation: spriteIdle);
+    final comp = SpriteAnimationComponent(
+        size: Vector2(66, 33),
+        position: getCenter(worldSize),
+        animation: spriteIdle);
 
     // If it was only needed to get 1 frame
     /*final _sprite = sheet.getSprite(0, 1);*/
 
-    avatar = Avatar(getCenter(worldSize), Vector2(0, 0), Vector2(66, 33), comp, spriteRunning);
+    avatar = Avatar(getCenter(worldSize), Vector2(0, 0), Vector2(66, 33), comp,
+        spriteRunning);
 
     addAll(createBoundaries(this));
     add(avatar);
